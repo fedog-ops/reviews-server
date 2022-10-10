@@ -7,7 +7,6 @@ const {getCategories} = require('./controller/controller')
 app.get('/api/categories', getCategories)
 
 app.all('/*', (req, res) => {
-    console.log('in here!!')
     res.status(404).send({message: "url not found"})
 })
 
