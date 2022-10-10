@@ -141,5 +141,9 @@ describe("GET/api/catagories" , () => {
 		return request(app)
 		.get('/api/doesnotexist')
 		.expect(404)
+		.then(({body}) => {
+			console.log(body, '<<< body in test')
+			expect(body).toEqual({message: "url not found"})
+		})
 	})
 })
