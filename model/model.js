@@ -1,6 +1,6 @@
 const db = require('../db/connection')
 
-exports.fetchCatagories = () => {
+exports.fetchCategories = () => {
     return db.query(`SELECT * FROM categories;`)
     .then(({rows}) => {
         return rows

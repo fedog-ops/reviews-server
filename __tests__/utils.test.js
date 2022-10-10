@@ -120,16 +120,16 @@ describe("formatComments", () => {
 describe("GET/api/catagories" , () => {
 	test('status 200: returns an array of catagories', () => {
 		return request(app)
-		.get('/api/catagories')
+		.get('/api/categories')
 		.expect(200)
 		.then(({body}) => {
-			const catagories = body
-			console.log(catagories, '<< in test')
-			
-			expect(catagories).toBeInstanceOfArray;
+			const categories = body
+			console.log(categories, '<< in test')
 
-			catagories.forEach(catagory => {
-				expect(catagory).toEqual(
+			expect(categories).toBeInstanceOfArray;
+
+			categories.forEach(category => {
+				expect(category).toEqual(
 					expect.objectContaining({
 						slug: expect.any(String),
 						description: expect.any(String)

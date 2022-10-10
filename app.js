@@ -2,8 +2,8 @@ const express = require('express');
 const app = express()
 app.use(express.json())
 
-const {getCatagories} = require('./controller/controller')
+const {getCategories} = require('./controller/controller')
 
-app.get('/api/catagories', getCatagories)
+app.get('/api/categories', getCategories)
 
 module.exports = app;
