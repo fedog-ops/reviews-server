@@ -118,13 +118,12 @@ describe("formatComments", () => {
 	});
 });
 describe("GET/api/catagories" , () => {
-	test('status 200: returns an array of catagories', () => {
+	test('status 200: return an array of catagories', () => {
 		return request(app)
 		.get('/api/categories')
 		.expect(200)
 		.then(({body}) => {
 			const categories = body
-			console.log(categories, '<< in test')
 
 			expect(categories).toBeInstanceOfArray;
 
@@ -138,10 +137,9 @@ describe("GET/api/catagories" , () => {
 			})
 		} )
 	})
-	test('', () => {
-		
-	})
-	test('', () => {
-		
+	test('status 404: produce error message if table does not exist', () => {
+		return request(app)
+		.get('/api/doesnotexist')
+		.expect(404)
 	})
 })
