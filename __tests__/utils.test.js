@@ -4,6 +4,21 @@ const {
 	formatComments,
 } = require("../db/seeds/utils");
 
+const request = require('supertest')
+const app = require('../app');
+const db = require('../db/connection')
+
+const data = require('../db/data/test-data/index')
+const seed = require('../db/seeds/seed');
+const { forEach } = require("../db/data/test-data/categories");
+
+beforeEach(()=>{
+	return seed(data)
+})
+afterAll(() => {
+	if(db.end) db.end()
+})
+
 describe("convertTimestampToDate", () => {
 	test("returns a new object", () => {
 		const timestamp = 1557572706232;
@@ -102,3 +117,30 @@ describe("formatComments", () => {
 		expect(formattedComments[0].created_at).toEqual(new Date(timestamp));
 	});
 });
+describe("GET/api/catagories" , () => {
+	test('status 200: returns an array of catagories', () => {
+		return request(app)
+		.get('/api/catagories')
+		.expect(200)
+		.then(({body}) => {
+			const catagories = body
+			console.log(catagories, '<< in test')
+			expect(catagories).toBeInstanceOfArray;
+
+			catagories.forEach(catagory => {
+				expect(catagory).toEqual(
+					expect.objectContaining({
+						slug: expect.any(String),
+						description: expect.any(String)
+					})
+				)
+			})
+		} )
+	})
+	test('', () => {
+		
+	})
+	test('', () => {
+		
+	})
+})
