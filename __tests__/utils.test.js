@@ -125,6 +125,7 @@ describe("GET/api/catagories" , () => {
 		.then(({body}) => {
 			const catagories = body
 			console.log(catagories, '<< in test')
+			
 			expect(catagories).toBeInstanceOfArray;
 
 			catagories.forEach(catagory => {
