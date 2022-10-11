@@ -7,7 +7,7 @@ const {getCategories, getReviews, getUsers, addVotes} = require('./controller/co
 app.get('/api/categories', getCategories)
 
 app.get('/api/reviews/:review_id', getReviews)
-app.post('/api/reviews/:review_id', addVotes)
+app.patch('/api/reviews/:review_id', addVotes)
 
 app.get('/api/users', getUsers)
 
