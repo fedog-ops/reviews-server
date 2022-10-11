@@ -182,3 +182,24 @@ describe("4 GET/api/reviews:review_id" , () => {
 	})
 
 
+	describe('GET /api/users', () => {
+		test('status 200: returns array of objects including username, name, avatar_url', () => {
+			return request(app)
+			.get('/api/users')
+			.expect(200)
+			.then(({body}) => {
+	
+				expect(body.users).toBeInstanceOfArray;
+	
+				body.users.forEach(user => {
+					expect(user).toEqual(
+						expect.objectContaining({
+							username: expect.any(String),
+							name: expect.any(String),
+							avatar_url: expect.any(String)
+						})
+					)
+				})
+			} )
+		})
+	})
