@@ -10,7 +10,6 @@ const db = require('../db/connection')
 
 const data = require('../db/data/test-data/index')
 const seed = require('../db/seeds/seed');
-const { forEach } = require("../db/data/test-data/categories");
 
 beforeEach(()=>{
 	return seed(data)
@@ -117,17 +116,14 @@ describe("formatComments", () => {
 		expect(formattedComments[0].created_at).toEqual(new Date(timestamp));
 	});
 });
-describe("GET/api/catagories" , () => {
+describe("3 GET/api/catagories" , () => {
 	test('status 200: return an array of catagories', () => {
 		return request(app)
 		.get('/api/categories')
 		.expect(200)
 		.then(({body}) => {
 			const categories = body
-
-			expect(categories).toBeInstanceOfArray;
-
-			categories.forEach(category => {
+			categories.forEach((category) => {
 				expect(category).toEqual(
 					expect.objectContaining({
 						slug: expect.any(String),
@@ -142,8 +138,50 @@ describe("GET/api/catagories" , () => {
 		.get('/api/doesnotexist')
 		.expect(404)
 		.then(({body}) => {
-			console.log(body, '<<< body in test')
 			expect(body).toEqual({message: "url not found"})
 		})
 	})
 })
+describe("4 GET/api/reviews:review_id" , () => {
+	test('status 200: return an array of reviews', () => {
+		return request(app)
+		.get('/api/reviews/1')
+		.expect(200)
+		.then(({body}) => {
+			const review = body
+			
+				
+				expect(review).toEqual(
+					expect.objectContaining({
+						review_id: expect.any(Number),
+						title: expect.any(String),
+						review_body: expect.any(String),
+						designer: expect.any(String),
+						review_img_url: expect.any(String),
+						votes: expect.any(Number),
+						category: expect.any(String),
+						created_at: expect.any(String),
+						
+					})
+				)
+			})
+		} )
+	test('status 400: invalid data type', () => {
+		return request(app)
+		.get('/api/reviews/banana')
+		.expect(400)
+		.then(({body}) => {
+			expect(body.msg).toBe('invalid data type')
+		})
+	})
+	test('status 404: does not exist in database', () => {
+		return request(app)
+		.get('/api/reviews/9999999')
+		.expect(404)
+		.then(({body}) => {
+			expect(body.msg).toBe('does not exist')
+		})
+	})
+	})
+
+
