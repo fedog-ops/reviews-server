@@ -1,4 +1,4 @@
-const {fetchCategories, fetchReviews} = require('../model/model')
+const {fetchCategories, fetchReviews, fetchUsers} = require('../model/model')
 
 exports.getCategories = (req, res, next) => {
    fetchCategories().then((categories) => {
@@ -13,5 +13,10 @@ const review_id = req.params.review_id
         res.status(200).send({review: reviews[0]})
     }).catch((err) => {
         next(err)
+    })
+}
+exports.getUsers = (req, res, next) => {
+    fetchUsers().then((data) => {
+        res.status(200).send({users: data})
     })
 }
