@@ -36,5 +36,7 @@ const votesAdd = req.body.inc_votes
 
   insertVotes(review_id, votesAdd).then((data) => {
     res.status(200).send({user: data[0]});
+  }).catch((err) => {
+    next(err);
   });
 };

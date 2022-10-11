@@ -28,7 +28,10 @@ exports.insertVotes = (review_id, votes) => {
     WHERE review_id = $2
     RETURNING *;`, [ votes, review_id])
     .then(({rows}) => {
-        console.log(rows)
+        if(rows.length === 0){
+        return Promise.reject({status:404, msg: 'does not exist'})
+    }
         return rows
-    })
+    }) 
+    
 }

@@ -215,7 +215,7 @@ describe("4 GET/api/reviews:review_id" , () => {
 })
 
 describe.only('POST reviews/:review_id', () => {
-	test('' , () => {
+	test('Update votes in reviews with given object ' , () => {
 		return request(app)
 		.post('/api/reviews/1')
 		.send({ inc_votes: 1 })
@@ -224,6 +224,22 @@ describe.only('POST reviews/:review_id', () => {
 				expect(body.user.votes).toBe(2)
 		})
 	})
+	test('status 400: invalid data type', () => {
+		return request(app)
+		.get('/api/reviews/coop')
+		.expect(400)
+		.then(({body}) => {
+			expect(body.msg).toBe('invalid data type')
+		})
+	})
+	test('status 404: path does not exist', () => {
+		return request(app)
+		.get('/api/fail')
+		.expect(404)
+		.then(({body}) => {
+			expect(body.msg).toBe('path does not exist')
+		})
+})
 
 })
 	// test('Add comment_count to users', () => {
