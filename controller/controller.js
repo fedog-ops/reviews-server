@@ -2,7 +2,7 @@ const {
   fetchCategories,
   fetchReviews,
   fetchUsers,
-  insertVotes,
+  ammendVotes,
 } = require("../model/model");
 
 exports.getCategories = (req, res, next) => {
@@ -30,11 +30,11 @@ exports.getUsers = (req, res, next) => {
     res.status(200).send({ users: data });
   });
 };
-exports.addVotes = (req, res, next) => {
+exports.updateVotes = (req, res, next) => {
 const review_id = req.params.review_id;
 const votesAdd = req.body.inc_votes
 
-  insertVotes(review_id, votesAdd).then((data) => {
+  ammendVotes(review_id, votesAdd).then((data) => {
     res.status(200).send({user: data[0]});
   }).catch((err) => {
     next(err);

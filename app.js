@@ -2,12 +2,12 @@ const express = require('express');
 const app = express()
 app.use(express.json())
 
-const {getCategories, getReviews, getUsers, addVotes} = require('./controller/controller')
+const {getCategories, getReviews, getUsers, updateVotes} = require('./controller/controller')
 
 app.get('/api/categories', getCategories)
 
 app.get('/api/reviews/:review_id', getReviews)
-app.patch('/api/reviews/:review_id', addVotes)
+app.patch('/api/reviews/:review_id', updateVotes)
 
 app.get('/api/users', getUsers)
 

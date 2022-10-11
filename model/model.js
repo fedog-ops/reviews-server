@@ -22,7 +22,7 @@ exports.fetchUsers = () => {
         return rows
     })
 }
-exports.insertVotes = (review_id, votes) => {
+exports.ammendVotes = (review_id, votes) => {
     return db.query(`UPDATE reviews
     SET votes = votes + $1
     WHERE review_id = $2
