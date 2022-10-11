@@ -10,7 +10,7 @@ exports.getCategories = (req, res, next) => {
 exports.getReviews = (req, res, next) => {
 const review_id = req.params.review_id
     fetchReviews(review_id).then((reviews) => {
-        res.status(200).send(reviews[0])
+        res.status(200).send({review: reviews[0]})
     }).catch((err) => {
         next(err)
     })
