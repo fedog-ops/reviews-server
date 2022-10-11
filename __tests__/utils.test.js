@@ -138,7 +138,7 @@ describe("3 GET/api/catagories" , () => {
 		.get('/api/doesnotexist')
 		.expect(404)
 		.then(({body}) => {
-			expect(body).toEqual({message: "url not found"})
+			expect(body).toEqual({msg: "path does not exist"})
 		})
 	})
 })
@@ -182,3 +182,33 @@ describe("4 GET/api/reviews:review_id" , () => {
 	})
 
 
+	describe('GET /api/users', () => {
+		test('status 200: returns array of objects including username, name, avatar_url', () => {
+			return request(app)
+			.get('/api/users')
+			.expect(200)
+			.then(({body}) => {
+	
+				expect(body.users).toBeInstanceOfArray;
+				if (body.users.length > 0){
+				body.users.forEach(user => {
+					expect(user).toEqual(
+						expect.objectContaining({
+							username: expect.any(String),
+							name: expect.any(String),
+							avatar_url: expect.any(String)
+						})
+					)
+				})
+			}
+			} )
+		})
+		test('status 404: path does not exist', () => {
+			return request(app)
+			.get('/api/fail')
+			.expect(404)
+			.then(({body}) => {
+				expect(body.msg).toBe('path does not exist')
+			})
+	})
+})
