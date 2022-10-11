@@ -124,7 +124,6 @@ describe("3 GET/api/catagories" , () => {
 		.then(({body}) => {
 			const categories = body
 			categories.forEach((category) => {
-				console.log(category)
 				expect(category).toEqual(
 					expect.objectContaining({
 						slug: expect.any(String),
@@ -139,7 +138,6 @@ describe("3 GET/api/catagories" , () => {
 		.get('/api/doesnotexist')
 		.expect(404)
 		.then(({body}) => {
-			console.log(body, '<<< body in test')
 			expect(body).toEqual({message: "url not found"})
 		})
 	})
@@ -147,7 +145,7 @@ describe("3 GET/api/catagories" , () => {
 describe("4 GET/api/reviews:review_id" , () => {
 	test('status 200: return an array of reviews', () => {
 		return request(app)
-		.get('/api/reviews')
+		.get('/api/reviews/1')
 		.expect(200)
 		.then(({body}) => {
 			const review = body
@@ -168,6 +166,22 @@ describe("4 GET/api/reviews:review_id" , () => {
 				)
 			})
 		} )
+	test('status 400: invalid data type', () => {
+		return request(app)
+		.get('/api/reviews/banana')
+		.expect(400)
+		.then(({body}) => {
+			expect(body.msg).toBe('invalid data type')
+		})
+	})
+	test('status 404: does not exist in database', () => {
+		return request(app)
+		.get('/api/reviews/9999999')
+		.expect(404)
+		.then(({body}) => {
+			expect(body.msg).toBe('does not exist')
+		})
+	})
 	})
 
 

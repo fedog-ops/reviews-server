@@ -6,11 +6,13 @@ exports.fetchCategories = () => {
         return rows
     })
 }
-exports.fetchReviews = () => {
+exports.fetchReviews = (review_id) => {
     return db.query(`SELECT * FROM reviews
-    WHERE review_id = 1;`)
+    WHERE review_id = $1;`, [review_id])
     .then(({rows}) => {
-        console.log(rows, 'in fetchReviews model')
+        if(rows.length === 0){
+            return Promise.reject({status:404, msg: 'does not exist'})
+        }
         return rows
     })
 }
