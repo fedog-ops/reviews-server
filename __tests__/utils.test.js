@@ -138,7 +138,7 @@ describe("3 GET/api/catagories" , () => {
 		.get('/api/doesnotexist')
 		.expect(404)
 		.then(({body}) => {
-			expect(body).toEqual({message: "url not found"})
+			expect(body).toEqual({msg: "url not found"})
 		})
 	})
 })
@@ -202,4 +202,12 @@ describe("4 GET/api/reviews:review_id" , () => {
 				})
 			} )
 		})
+		test('status 404: does not exist in database', () => {
+			return request(app)
+			.get('/api/fail')
+			.expect(404)
+			.then(({body}) => {
+				expect(body.msg).toBe('url not found')
+			})
 	})
+})

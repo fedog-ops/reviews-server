@@ -12,7 +12,7 @@ app.get('/api/users', getUsers)
 
 
 app.all('/*', (req, res) => {
-    res.status(404).send({message: "url not found"})
+    res.status(404).send({msg: "url not found"})
 })
 
 app.use((err, req, res, next) => {
