@@ -211,4 +211,49 @@ describe("4 GET/api/reviews:review_id" , () => {
 				expect(body.msg).toBe('path does not exist')
 			})
 	})
+	
 })
+
+describe.only('POST reviews/:review_id', () => {
+	test('Update votes in reviews with given object ' , () => {
+		return request(app)
+		.patch('/api/reviews/1')
+		.send({ inc_votes: 1 })
+		.then(({body}) => {
+				expect(body.user.votes).toBe(2)
+		})
+	})
+	test('status 400: invalid data type', () => {
+		return request(app)
+		.patch('/api/reviews/coop')
+		.expect(400)
+		.then(({body}) => {
+			expect(body.msg).toBe('invalid data type')
+		})
+	})
+	test('status 404: path does not exist', () => {
+		return request(app)
+		.patch('/api/fail')
+		.expect(404)
+		.then(({body}) => {
+			expect(body.msg).toBe('path does not exist')
+		})
+})
+
+})
+	// test('Add comment_count to users', () => {
+	// 	return request(app)
+	// 	.get('/api/reviews')
+	// 	.expect(200)
+	// 	.then(({body}) => {
+	// 		if (body.users.length > 0){
+	// 			body.users.forEach(user => {
+	// 				expect(user).toEqual(
+	// 					expect.objectContaining({
+	// 						comment_count: expect.any(Number)
+	// 					})
+	// 				)
+	// 			})
+	// 		}
+	// 	})
+	// })

@@ -17,8 +17,21 @@ exports.fetchReviews = (review_id) => {
     })
 }
 exports.fetchUsers = () => {
-    return db.query(`SELECT * FROM users;`)
+    return db.query(`SELECT users. * FROM users;`)
     .then(({rows}) => {
         return rows
     })
+}
+exports.ammendVotes = (review_id, votes) => {
+    return db.query(`UPDATE reviews
+    SET votes = votes + $1
+    WHERE review_id = $2
+    RETURNING *;`, [ votes, review_id])
+    .then(({rows}) => {
+        if(rows.length === 0){
+        return Promise.reject({status:404, msg: 'does not exist'})
+    }
+        return rows
+    }) 
+    
 }
