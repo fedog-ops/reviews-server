@@ -17,8 +17,18 @@ exports.fetchReviews = (review_id) => {
     })
 }
 exports.fetchUsers = () => {
-    return db.query(`SELECT * FROM users;`)
+    return db.query(`SELECT users. * FROM users;`)
     .then(({rows}) => {
+        return rows
+    })
+}
+exports.insertVotes = (review_id, votes) => {
+    return db.query(`UPDATE reviews
+    SET votes = votes + $1
+    WHERE review_id = $2
+    RETURNING *;`, [ votes, review_id])
+    .then(({rows}) => {
+        console.log(rows)
         return rows
     })
 }

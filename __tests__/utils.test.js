@@ -211,4 +211,34 @@ describe("4 GET/api/reviews:review_id" , () => {
 				expect(body.msg).toBe('path does not exist')
 			})
 	})
+	
 })
+
+describe.only('POST reviews/:review_id', () => {
+	test('' , () => {
+		return request(app)
+		.post('/api/reviews/1')
+		.send({ inc_votes: 1 })
+		.then(({body}) => {
+			console.log(body)
+				expect(body.user.votes).toBe(2)
+		})
+	})
+
+})
+	// test('Add comment_count to users', () => {
+	// 	return request(app)
+	// 	.get('/api/reviews')
+	// 	.expect(200)
+	// 	.then(({body}) => {
+	// 		if (body.users.length > 0){
+	// 			body.users.forEach(user => {
+	// 				expect(user).toEqual(
+	// 					expect.objectContaining({
+	// 						comment_count: expect.any(Number)
+	// 					})
+	// 				)
+	// 			})
+	// 		}
+	// 	})
+	// })
