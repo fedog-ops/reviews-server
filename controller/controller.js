@@ -15,7 +15,6 @@ exports.getCategories = (req, res, next) => {
     });
 };
 exports.getReviews = (req, res, next) => {
-  console.log("in here get");
   const review_id = req.params.review_id;
   fetchReviews(review_id)
     .then((reviews) => {
