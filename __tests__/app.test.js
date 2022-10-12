@@ -201,5 +201,35 @@ describe("3 GET/api/catagories", () => {
           expect(body.reviews).toBeSortedBy('created_at', {descending:true})
         });
     });
-    test("contains the correct properties")
+    test("contains the correct properties", () => {
+        return request(app)
+        .get('/api/reviews')
+        .expect(200)
+        .then(({ body }) => {
+            body.reviews.forEach((review) => {
+                expect(review).toEqual(
+                    expect.objectContaining({
+                        title: expect.any(String),
+                        review_id: expect.any(Number),
+                        category: expect.any(String),
+                        designer: expect.any(String),
+                        owner: expect.any(String),
+                        review_body: expect.any(String),
+                        review_img_url: expect.any(String),
+                        created_at: expect.any(String),
+                        votes: expect.any(Number),
+                        comment_count: expect.any(Number)
+                    })
+                )
+            })
+         });
+    }) 
+      test("status 404: path does not exist", () => {
+        return request(app)
+          .patch("/api/fail")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).toBe("path does not exist");
+          });
+      });
 });
