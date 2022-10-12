@@ -191,4 +191,47 @@ describe("3 GET/api/catagories", () => {
             });
         });
   });
-  
+  describe.only("8 GET/api/reviews DATE DESC", () => {
+   
+    test("status 200: return an array of reviews in order of created_at", () => {
+      return request(app)
+        .get("/api/reviews")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.reviews).toBeSortedBy('created_at', {descending:true})
+        });
+    });
+    test("contains the correct properties", () => {
+        return request(app)
+        .get('/api/reviews')
+        .expect(200)
+        .then(({ body }) => {
+            if(body.reviews.length > 0){
+            body.reviews.forEach((review) => {
+                expect(review).toEqual(
+                    expect.objectContaining({
+                        title: expect.any(String),
+                        review_id: expect.any(Number),
+                        category: expect.any(String),
+                        designer: expect.any(String),
+                        owner: expect.any(String),
+                        review_body: expect.any(String),
+                        review_img_url: expect.any(String),
+                        created_at: expect.any(String),
+                        votes: expect.any(Number),
+                        comment_count: expect.any(Number)
+                    })
+                )
+            })
+        }
+         });
+    }) 
+      test("status 404: path does not exist", () => {
+        return request(app)
+          .patch("/api/fail")
+          .expect(404)
+          .then(({ body }) => {
+            expect(body.msg).toBe("path does not exist");
+          });
+      });
+});
