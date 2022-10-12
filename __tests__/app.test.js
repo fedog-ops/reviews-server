@@ -192,14 +192,14 @@ describe("3 GET/api/catagories", () => {
         });
   });
   describe.only("8 GET/api/reviews DATE DESC", () => {
-    
-    test("status 200: return an array of reviews with correct keys", () => {
+   
+    test("status 200: return an array of reviews in order of created_at", () => {
       return request(app)
         .get("/api/reviews")
         .expect(200)
         .then(({ body }) => {
-          expect(body).toBeInstanceOfArray
+          expect(body.reviews).toBeSortedBy('created_at', {descending:true})
         });
     });
-
+    test("contains the correct properties")
 });
