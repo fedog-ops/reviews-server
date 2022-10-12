@@ -8,7 +8,6 @@ exports.fetchCategories = () => {
 }
 exports.fetchReviews = (review_id) => {
     return db.query(
-        //`SELECT * FROM reviews WHERE review_id = $1;`
 `SELECT reviews.* , 
 COUNT(comments.review_id) ::INT AS comment_count 
 FROM reviews
