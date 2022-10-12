@@ -42,8 +42,8 @@ const votesAdd = req.body.inc_votes
 };
 exports.getReviews = (req, res, next) => {
     fetchReviews()
-    .then((ans) => {
-        res.status(200).send({reviews: ans});
+    .then((reviews) => {
+        res.status(200).send({reviews: reviews});
     }).catch((err) => {
         next(err)
     })

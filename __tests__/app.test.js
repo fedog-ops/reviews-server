@@ -206,6 +206,7 @@ describe("3 GET/api/catagories", () => {
         .get('/api/reviews')
         .expect(200)
         .then(({ body }) => {
+            if(body.reviews.length > 0){
             body.reviews.forEach((review) => {
                 expect(review).toEqual(
                     expect.objectContaining({
@@ -222,6 +223,7 @@ describe("3 GET/api/catagories", () => {
                     })
                 )
             })
+        }
          });
     }) 
       test("status 404: path does not exist", () => {
