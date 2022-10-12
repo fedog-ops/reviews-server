@@ -254,9 +254,7 @@ describe("7 GET/api/reviews:review_id WITHN COMMENTS :D", () => {
         .get("/api/reviews/2")
         .expect(200)
         .then(({ body }) => {
-          console.log(body.review);
-
-          if (body.review.length > 0) {
+		  if (body.review.length > 0) {
             body.review.forEach((user) => {
               expect(body.review).toEqual(
                 expect.objectContaining({
