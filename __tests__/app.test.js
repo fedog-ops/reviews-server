@@ -191,7 +191,7 @@ describe("3 GET/api/catagories", () => {
             });
         });
   });
-  describe.only("8 GET/api/reviews DATE DESC", () => {
+  describe("8 GET/api/reviews DATE DESC", () => {
    
     test("status 200: return an array of reviews in order of created_at", () => {
       return request(app)
