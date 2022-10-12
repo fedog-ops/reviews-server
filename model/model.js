@@ -6,7 +6,7 @@ exports.fetchCategories = () => {
         return rows
     })
 }
-exports.fetchReviews = (review_id) => {
+exports.fetchReviewsById = (review_id) => {
     return db.query(
 `SELECT reviews.* , 
 COUNT(comments.review_id) ::INT AS comment_count 
@@ -44,5 +44,24 @@ exports.ammendVotes = (review_id, votes) => {
     }
         return rows
     }) 
+    
+}
+exports.fetchReviews = () => {
+    return db.query(
+        `SELECT reviews.* , 
+        COUNT(comments.review_id) ::INT AS comment_count 
+        FROM reviews
+        
+        LEFT JOIN comments
+        ON comments.review_id = reviews.review_id
+        
+        GROUP BY reviews.review_id
+        ORDER BY created_at DESC;`)
+            .then(({rows}) => {
+                if(rows.length === 0){
+                    return Promise.reject({status:404, msg: 'does not exist'})
+                }
+                return rows
+            })
     
 }
