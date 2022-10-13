@@ -321,5 +321,23 @@ describe('Task 10', () => {
         expect(body.msg).toEqual("invalid data type");
       });
   });
- 
+  test("status 400: non existent id", () => {
+    return request(app)
+      .post("/api/reviews/999999999/comments")
+      .send({username: 'fedog', body:'lmldm'})
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toEqual("invalid data type");
+      });
+      
+  });
+ test("status 400: invalid username used", () => {
+        return request(app)
+          .post("/api/reviews/2/comments")
+          .send({username: 'fedog', body:'lmldm'})
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toEqual("invalid data type");
+          });
+      });
 })
