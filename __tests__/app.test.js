@@ -293,7 +293,7 @@ test("status 404: review_id 999999 >>>>> does not exist", () => {
     })
 })
 
-describe('Task 10', () => {
+describe.only('Task 10', () => {
   test('status 201: adds object containing username and body', () => {
     const entry = {username: 'mallionaire', body: 'test for task 10'}
     return request(app)
@@ -312,5 +312,14 @@ describe('Task 10', () => {
       }))
     })
   })
-  
+  test("status 400: invalid username used", () => {
+    return request(app)
+      .post("/api/reviews/2/comments")
+      .send({username: 'fedog', body:'lmldm'})
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toEqual("invalid data type");
+      });
+  });
+ 
 })

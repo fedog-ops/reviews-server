@@ -34,10 +34,11 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  if (err.code === "22P02") {
+  if (err.code === "22P02" || err.code === '23503') {
     res.status(400).send({ msg: "invalid data type" });
   } else next(err);
 });
+
 app.use((err, req, res, next) => {
   console.log(err, "in 500 error block");
   res.status(500).send({ message: "internal error" });
