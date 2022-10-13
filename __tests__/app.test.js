@@ -295,12 +295,22 @@ test("status 404: review_id 999999 >>>>> does not exist", () => {
 
 describe('Task 10', () => {
   test('status 201: adds object containing username and body', () => {
-    const entry = {username: 'fedog', body: 'test for task 10'}
+    const entry = {username: 'mallionaire', body: 'test for task 10'}
     return request(app)
     .post('/api/reviews/1/comments')
+    .send(entry)
     .expect(201)
     .then(({body}) => {
-      expect(body.comment).toEqual(entry)
+      expect(body.comment).toEqual(
+        expect.objectContaining({
+        
+          body: 'test for task 10',
+          votes: 0,
+          author: 'mallionaire',
+          review_id: 1,
+          comment_id: 7,
+      }))
     })
   })
+  
 })

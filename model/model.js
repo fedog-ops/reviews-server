@@ -75,3 +75,16 @@ exports.fetchCommentByReviewId = (review_id) => {
             return rows
         })
 }
+exports.addComment = (review_id, username, body) => {
+    console.log(body)
+    return db.query(
+    `INSERT INTO comments
+    (body, author, review_id)
+    VALUES
+    ($1, $2, $3)
+    RETURNING *;`, [body, username, review_id])
+    .then(({rows}) => {
+        console.log(rows)
+        return rows
+    })
+}

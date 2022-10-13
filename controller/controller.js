@@ -4,7 +4,8 @@ const {
   fetchUsers,
   ammendVotes,
   fetchReviews,
-  fetchCommentByReviewId
+  fetchCommentByReviewId,
+  addComment
 } = require("../model/model");
 
 exports.getCategories = (req, res, next) => {
@@ -64,4 +65,12 @@ const promises = [
     .catch((err) => {
       next(err);
     });
+}
+exports.postComment = (req, res, next) => {
+ 
+ const review_id = req.params.review_id;
+ const {username, body} = req.body
+  addComment(review_id, username, body).then((newComment) => {
+    res.status(201).send({comment: newComment[0]})
+  })
 }
