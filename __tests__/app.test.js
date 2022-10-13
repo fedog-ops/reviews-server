@@ -350,3 +350,46 @@ describe('Task 10', () => {
             })
         })  
 })
+
+describe('Task 11 update getReviews with quieres' , () => {
+  it('sort by', () => {
+    return request(app)
+    .get('/api/reviews?order_by=ASC&sort_by=votes')
+    .expect(200)
+    .then(({body}) => {
+      expect(body.reviews).toBeSortedBy('votes', {descending:false})
+    })
+  })
+  it('sort by votes with DESC default', () => {
+    return request(app)
+    .get('/api/reviews?&sort_by=votes')
+    .expect(200)
+    .then(({body}) => {
+      expect(body.reviews).toBeSortedBy('votes', {descending:true})
+    })
+  })
+  it('order by ASC with created_at default', () => {
+    return request(app)
+    .get('/api/reviews?&order_by=ASC')
+    .expect(200)
+    .then(({body}) => {
+      expect(body.reviews).toBeSortedBy('created_at', {descending:false})
+    })
+  })
+  it('400: invalid order_by given', () => {
+    return request(app)
+    .get('/api/reviews?&order_by=FAIL')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.msg).toBe('invalid data type')
+    })
+  })
+  it('400: invalid sort_by given', () => {
+    return request(app)
+    .get('/api/reviews?&sort_by=FAIL')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.msg).toBe('invalid data type')
+    })
+  })
+})
