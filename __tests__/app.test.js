@@ -293,7 +293,7 @@ test("status 404: review_id 999999 >>>>> does not exist", () => {
     })
 })
 
-describe.only('Task 10', () => {
+describe('Task 10', () => {
   test('status 201: adds object containing username and body', () => {
     const entry = {username: 'mallionaire', body: 'test for task 10'}
     return request(app)
