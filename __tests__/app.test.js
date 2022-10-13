@@ -239,14 +239,14 @@ describe("3 GET/api/catagories", () => {
 describe('status 200: task 9' , () => {
   test("contains the correct properties", () => {
     return request(app)
-    .get('/api/reviews/1/comments')
+    .get('/api/reviews/2/comments')
     .expect(200)
     .then(({ body }) => {
-        if(body.comment.length > 0){
-        body.comment.forEach((review) => {
+        if(body.comments.length > 0){
+        body.comments.forEach((review) => {
             expect(review).toEqual(
                 expect.objectContaining({
-                    comment_id: expect.any(String),
+                    comment_id: expect.any(Number),
                     votes: expect.any(Number),
                     created_at: expect.any(String),
                     author: expect.any(String),
@@ -258,4 +258,29 @@ describe('status 200: task 9' , () => {
     }
      });
 }) 
+test("status 200: return an array of reviews in order of created_at", () => {
+  return request(app)
+    .get("/api/reviews/2/comments")
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.comments).toBeSortedBy('created_at', {descending:true})
+    });
+});
+test("404", () => {
+  return request(app)
+  .get('/api/reviews/9999999/comments')
+  .expect(404)
+  .then(({ body }) => {
+    expect(body.msg).toBe('does not exist')
+      })
+  })
+  test("review_id is empty", () => {
+    return request(app)
+    .get('/api/reviews/1/comments')
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.msg).toBe([])
+        })
+    })
+
 })
