@@ -236,7 +236,7 @@ describe("3 GET/api/catagories", () => {
       });
 });
 
-describe('Task 9' , () => {
+describe('9. GET /api/reviews/:review_id/comments' , () => {
   test("object containing the correct properties", () => {
     return request(app)
     .get('/api/reviews/2/comments')
@@ -402,4 +402,12 @@ describe('12 - delete comment', () => {
      expect(body).toEqual({})
     })
   })
+  test("status 404: delete comment_id 999999", () => {
+    return request(app)
+    .delete('/api/comments/9999999')
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.msg).toBe('comment does not exist')
+        })
+    })
 })
