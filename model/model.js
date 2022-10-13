@@ -71,9 +71,7 @@ exports.fetchCommentByReviewId = (review_id) => {
        WHERE review_id = $1
        ORDER BY created_at DESC;`, [review_id])
         .then(({rows}) => {
-            if(rows.length === 0){
-                return Promise.reject({status:404, msg: 'does not exist'})
-            }
+            
             return rows
         })
 }

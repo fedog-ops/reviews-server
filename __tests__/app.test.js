@@ -236,15 +236,15 @@ describe("3 GET/api/catagories", () => {
       });
 });
 
-describe('status 200: task 9' , () => {
-  test("contains the correct properties", () => {
+describe('Task 9' , () => {
+  test("object containing the correct properties", () => {
     return request(app)
     .get('/api/reviews/2/comments')
     .expect(200)
     .then(({ body }) => {
         if(body.comments.length > 0){
-        body.comments.forEach((review) => {
-            expect(review).toEqual(
+        body.comments.forEach((comment) => {
+            expect(comment).toEqual(
                 expect.objectContaining({
                     comment_id: expect.any(Number),
                     votes: expect.any(Number),
@@ -258,7 +258,7 @@ describe('status 200: task 9' , () => {
     }
      });
 }) 
-test("status 200: return an array of reviews in order of created_at", () => {
+test("status 200: return an array of reviews in order of created_at DESC", () => {
   return request(app)
     .get("/api/reviews/2/comments")
     .expect(200)
@@ -266,7 +266,16 @@ test("status 200: return an array of reviews in order of created_at", () => {
       expect(body.comments).toBeSortedBy('created_at', {descending:true})
     });
 });
-test("404", () => {
+
+  test("status 200: review_id 1 >>>>> accepts empty array", () => {
+    return request(app)
+    .get('/api/reviews/1/comments')
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.comments).toEqual([])
+        })
+    })
+test("status 404: review_id 999999 >>>>> does not exist", () => {
   return request(app)
   .get('/api/reviews/9999999/comments')
   .expect(404)
@@ -274,13 +283,12 @@ test("404", () => {
     expect(body.msg).toBe('does not exist')
       })
   })
-  test("review_id is empty", () => {
+  test("status 400: reviews/banana/comments >>>> invalid data type", () => {
     return request(app)
-    .get('/api/reviews/1/comments')
-    .expect(200)
+    .get('/api/reviews/banana/comments')
+    .expect(400)
     .then(({ body }) => {
-      expect(body.msg).toBe([])
+      expect(body.msg).toBe('invalid data type')
         })
     })
-
 })

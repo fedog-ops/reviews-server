@@ -51,7 +51,11 @@ exports.getReviews = (req, res, next) => {
 }
 exports.getCommentByReviewId = (req, res, next) => {
 const review_id = req.params.review_id;
-const promises = [fetchCommentByReviewId(review_id)]
+
+const promises = [
+  fetchCommentByReviewId(review_id), 
+  fetchReviewsById(review_id)
+]
 
   Promise.all(promises)
     .then((comment) => {
