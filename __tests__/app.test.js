@@ -191,7 +191,7 @@ describe("3 GET/api/catagories", () => {
             });
         });
   });
-  describe.only("8 GET/api/reviews DATE DESC", () => {
+  describe("8 GET/api/reviews DATE DESC", () => {
    
     test("status 200: return an array of reviews in order of created_at", () => {
       return request(app)
@@ -235,3 +235,60 @@ describe("3 GET/api/catagories", () => {
           });
       });
 });
+
+describe('Task 9' , () => {
+  test("object containing the correct properties", () => {
+    return request(app)
+    .get('/api/reviews/2/comments')
+    .expect(200)
+    .then(({ body }) => {
+        if(body.comments.length > 0){
+        body.comments.forEach((comment) => {
+            expect(comment).toEqual(
+                expect.objectContaining({
+                    comment_id: expect.any(Number),
+                    votes: expect.any(Number),
+                    created_at: expect.any(String),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    review_id: expect.any(Number),
+                })
+            )
+        })
+    }
+     });
+}) 
+test("status 200: return an array of reviews in order of created_at DESC", () => {
+  return request(app)
+    .get("/api/reviews/2/comments")
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.comments).toBeSortedBy('created_at', {descending:true})
+    });
+});
+
+  test("status 200: review_id 1 >>>>> accepts empty array", () => {
+    return request(app)
+    .get('/api/reviews/1/comments')
+    .expect(200)
+    .then(({ body }) => {
+      expect(body.comments).toEqual([])
+        })
+    })
+test("status 404: review_id 999999 >>>>> does not exist", () => {
+  return request(app)
+  .get('/api/reviews/9999999/comments')
+  .expect(404)
+  .then(({ body }) => {
+    expect(body.msg).toBe('does not exist')
+      })
+  })
+  test("status 400: reviews/banana/comments >>>> invalid data type", () => {
+    return request(app)
+    .get('/api/reviews/banana/comments')
+    .expect(400)
+    .then(({ body }) => {
+      expect(body.msg).toBe('invalid data type')
+        })
+    })
+})
