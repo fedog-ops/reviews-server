@@ -8,15 +8,18 @@ const {
   getUsers,
   updateVotes,
   getReviews,
-  getCommentByReviewId
+  getCommentByReviewId,
+  postComment
 } = require("./controller/controller");
 
 app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
 
 app.get("/api/reviews/:review_id", getReviewsById);
-app.get('/api/reviews/:review_id/comments', getCommentByReviewId)
 app.patch("/api/reviews/:review_id", updateVotes);
+
+app.get('/api/reviews/:review_id/comments', getCommentByReviewId)
+app.post('/api/reviews/:review_id/comments', postComment)
 
 app.get("/api/users", getUsers);
 
@@ -29,12 +32,17 @@ app.use((err, req, res, next) => {
     res.status(err.status).send(err);
   } else next(err);
 });
-
 app.use((err, req, res, next) => {
-  if (err.code === "22P02") {
+  if (err.code === '23503') {
+    res.status(404).send({ msg: "does not exist" });
+  } else next(err);
+});
+app.use((err, req, res, next) => {
+  if (err.code === "22P02" || err.code === '23502') {
     res.status(400).send({ msg: "invalid data type" });
   } else next(err);
 });
+
 app.use((err, req, res, next) => {
   console.log(err, "in 500 error block");
   res.status(500).send({ message: "internal error" });

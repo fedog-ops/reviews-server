@@ -292,3 +292,61 @@ test("status 404: review_id 999999 >>>>> does not exist", () => {
         })
     })
 })
+
+describe('Task 10', () => {
+  test('status 201: adds object containing username and body', () => {
+    const entry = {username: 'mallionaire', body: 'test for task 10'}
+    return request(app)
+    .post('/api/reviews/1/comments')
+    .send(entry)
+    .expect(201)
+    .then(({body}) => {
+      expect(body.comment).toEqual(
+        expect.objectContaining({
+        
+          body: 'test for task 10',
+          votes: 0,
+          author: 'mallionaire',
+          review_id: 1,
+          comment_id: 7,
+      }))
+    })
+  })
+  test("status 404: invalid username used", () => {
+    return request(app)
+      .post("/api/reviews/2/comments")
+      .send({username: 'fedog', body:'lmldm'})
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toEqual("does not exist");
+      });
+  });
+  test("status 404: non existent review_id", () => {
+    return request(app)
+      .post("/api/reviews/999999999/comments")
+      .send({username: 'mallionaire', body:'lmldm'})
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toEqual("does not exist");
+      });
+      
+  });
+ test("status 400: empty comment body", () => {
+        return request(app)
+          .post("/api/reviews/2/comments")
+          .send({})
+          .expect(400)
+          .then(({ body }) => {
+            expect(body.msg).toEqual("invalid data type");
+          });
+      });
+  test("status 404: path does not exist", () => {
+        return request(app)
+        .get('/api/reviews/3/commentwrongpath')
+        .send({username: 'mallionaire', body:'lmldm'})
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('path does not exist')
+            })
+        })  
+})
