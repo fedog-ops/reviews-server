@@ -43,7 +43,8 @@ const votesAdd = req.body.inc_votes
   });
 };
 exports.getReviews = (req, res, next) => {
-    fetchReviews()
+  const {order_by, sort_by} = req.query
+    fetchReviews(order_by, sort_by)
     .then((reviews) => {
         res.status(200).send({reviews: reviews});
     }).catch((err) => {

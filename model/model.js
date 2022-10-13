@@ -46,7 +46,7 @@ exports.ammendVotes = (review_id, votes) => {
     }) 
     
 }
-exports.fetchReviews = () => {
+exports.fetchReviews = (order_by = 'DESC', sort_by = 'created_at') => {
     return db.query(
         `SELECT reviews.* , 
         COUNT(comments.review_id) ::INT AS comment_count 
@@ -56,14 +56,13 @@ exports.fetchReviews = () => {
         ON comments.review_id = reviews.review_id
         
         GROUP BY reviews.review_id
-        ORDER BY created_at DESC;`)
+        ORDER BY ${sort_by} ${order_by};`)
             .then(({rows}) => {
                 if(rows.length === 0){
                     return Promise.reject({status:404, msg: 'does not exist'})
                 }
                 return rows
             })
-    
 }
 exports.fetchCommentByReviewId = (review_id) => {
     return db.query(
