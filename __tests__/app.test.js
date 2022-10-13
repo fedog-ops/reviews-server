@@ -376,7 +376,20 @@ describe('Task 11 update getReviews with quieres' , () => {
       expect(body.reviews).toBeSortedBy('created_at', {descending:false})
     })
   })
-  it('', () => {
-    
+  it('400: invalid order_by given', () => {
+    return request(app)
+    .get('/api/reviews?&order_by=FAIL')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.msg).toBe('invalid data type')
+    })
+  })
+  it('400: invalid sort_by given', () => {
+    return request(app)
+    .get('/api/reviews?&sort_by=FAIL')
+    .expect(400)
+    .then(({body}) => {
+      expect(body.msg).toBe('invalid data type')
+    })
   })
 })
