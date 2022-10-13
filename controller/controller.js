@@ -3,7 +3,8 @@ const {
   fetchReviewsById,
   fetchUsers,
   ammendVotes,
-  fetchReviews
+  fetchReviews,
+  fetchCommentByReviewId
 } = require("../model/model");
 
 exports.getCategories = (req, res, next) => {
@@ -47,4 +48,14 @@ exports.getReviews = (req, res, next) => {
     }).catch((err) => {
         next(err)
     })
+}
+exports.getCommentByReviewId = (req, res, next) => {
+  const review_id = req.params.review_id;
+  fetchCommentByReviewId(review_id)
+    .then((comment) => {
+      res.status(200).send({ comment: comment });
+    })
+    .catch((err) => {
+      next(err);
+    });
 }

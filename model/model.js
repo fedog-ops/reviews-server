@@ -65,3 +65,14 @@ exports.fetchReviews = () => {
             })
     
 }
+exports.fetchCommentByReviewId = () => {
+    return db.query(
+        `SELECT * FROM comments
+         WHERE review_id = 1;`)
+        .then(({rows}) => {
+            // if(rows.length === 0){
+            //     return Promise.reject({status:404, msg: 'does not exist'})
+            // }
+            return rows
+        })
+}

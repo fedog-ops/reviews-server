@@ -235,3 +235,27 @@ describe("3 GET/api/catagories", () => {
           });
       });
 });
+
+describe('status 200: task 9' , () => {
+  test("contains the correct properties", () => {
+    return request(app)
+    .get('/api/reviews/1/comments')
+    .expect(200)
+    .then(({ body }) => {
+        if(body.comment.length > 0){
+        body.comment.forEach((review) => {
+            expect(review).toEqual(
+                expect.objectContaining({
+                    comment_id: expect.any(String),
+                    votes: expect.any(Number),
+                    created_at: expect.any(String),
+                    author: expect.any(String),
+                    body: expect.any(String),
+                    review_id: expect.any(Number),
+                })
+            )
+        })
+    }
+     });
+}) 
+})
