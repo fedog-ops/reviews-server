@@ -393,3 +393,13 @@ describe('Task 11 update getReviews with quieres' , () => {
     })
   })
 })
+describe('12 - delete comment', () => {
+  it('deletes given comment_id', () => {
+    return request(app)
+    .delete('/api/comments/3')
+    .expect(204)
+    .then(({body}) => {
+     expect(body).toEqual({})
+    })
+  })
+})
