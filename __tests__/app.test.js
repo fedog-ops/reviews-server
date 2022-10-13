@@ -321,23 +321,32 @@ describe('Task 10', () => {
         expect(body.msg).toEqual("invalid data type");
       });
   });
-  test("status 400: non existent id", () => {
+  test("status 400: non existent review_id", () => {
     return request(app)
       .post("/api/reviews/999999999/comments")
-      .send({username: 'fedog', body:'lmldm'})
+      .send({username: 'mallionaire', body:'lmldm'})
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toEqual("invalid data type");
       });
       
   });
- test("status 400: invalid username used", () => {
+ test("status 400: empty comment body", () => {
         return request(app)
           .post("/api/reviews/2/comments")
-          .send({username: 'fedog', body:'lmldm'})
+          .send({})
           .expect(400)
           .then(({ body }) => {
             expect(body.msg).toEqual("invalid data type");
           });
       });
+      test("status 404: review_id 999999 >>>>> does not exist", () => {
+        return request(app)
+        .get('/api/reviews/3/commentwrongpath')
+        .send({username: 'mallionaire', body:'lmldm'})
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe('path does not exist')
+            })
+        })  
 })
