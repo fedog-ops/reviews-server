@@ -5,12 +5,8 @@ const db = require("../db/connection");
 const data = require("../db/data/test-data/index");
 const seed = require("../db/seeds/seed");
 
-beforeEach(() => {
-  return seed(data);
-});
-afterAll(() => {
-  if (db.end) db.end();
-});
+beforeEach(() => seed(data))
+afterAll(() => db.end())
 
 
 describe("3 GET/api/catagories", () => {
@@ -236,7 +232,7 @@ describe("3 GET/api/catagories", () => {
       });
 });
 
-describe('Task 9' , () => {
+describe('9. GET /api/reviews/:review_id/comments' , () => {
   test("object containing the correct properties", () => {
     return request(app)
     .get('/api/reviews/2/comments')
@@ -392,4 +388,27 @@ describe('Task 11 update getReviews with quieres' , () => {
       expect(body.msg).toBe('invalid data type')
     })
   })
+})
+describe('12 - delete comment', () => {
+  test('deletes given comment_id', () => {
+    return request(app)
+    .delete('/api/comments/3')
+    .expect(204)
+  })
+  test("status 404: delete comment_id 999999", () => {
+    return request(app)
+    .delete('/api/comments/999')
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.msg).toBe('does not exist')
+        })
+    })
+    test("status 404: delete comment_id lemon", () => {
+      return request(app)
+      .delete('/api/comments/lemon')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid data type')
+          })
+      })
 })

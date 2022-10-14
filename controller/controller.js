@@ -5,7 +5,8 @@ const {
   ammendVotes,
   fetchReviews,
   fetchCommentByReviewId,
-  addComment
+  addComment,
+  deleteComment
 } = require("../model/model");
 
 exports.getCategories = (req, res, next) => {
@@ -77,3 +78,14 @@ exports.postComment = (req, res, next) => {
     next(err);
   });
 }
+
+exports.removeComment = (req, res, next) => {
+ 
+  const comment_id = req.params.comment_id;
+
+  deleteComment(comment_id).then((removedComment) => {
+     res.sendStatus(204)
+   }).catch((err) => {
+   next(err)
+   });
+  }
