@@ -16,7 +16,7 @@
   },
   "GET /api/reviews": {
     "description": "serves an array of all reviews",
-    "queries": ["category", "sort_by", "order"],
+    "queries": ["category", "sort_by", "order_by"],
     "exampleResponse": {
       "reviews": [
         {
@@ -30,6 +30,86 @@
         }
       ]
     }
+  },
+  "GET /api/reviews/:review_id": {
+    "description": "provides an object of a single review of the given id",
+    "queries": ["sort_by", "order_by"],
+    "exampleResponse": {
+      "review_id": 1,
+      "title": "Agricola",
+      "designer": "Uwe Rosenberg",
+      "owner": "mallionaire",
+      "review_img_url": "https:www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+      "review_body": "Farmyard fun!",
+      "category": "euro game",
+      "created_at": "1610964020514",
+      "votes": 1
+    }
+  },
+  "GET /api/users": {
+    "description": "provides an array of all the users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "philippaclaire9",
+          "name": "philippa",
+          "avatar_url": "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4"
+        }
+      ]
+    }
+  },
+  "PATCH /api/reviews/:review_id": {
+    "description": "updates a review based on the given id and value",
+    "queries": [
+      { "inc_vote": 1 },
+      "must be given an object with a valid key and value"
+    ],
+    "exampleResponse": {
+      "review_id": 1,
+      "title": "Agricola",
+      "designer": "Uwe Rosenberg",
+      "owner": "mallionaire",
+      "review_img_url": "https:www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+      "review_body": "Farmyard fun!",
+      "category": "euro game",
+      "created_at": "1610964020514",
+      "votes": 1
+    }
+  },
+  "GET /api/reviews/:review_id/comments": {
+    "description": "returns an array of the comments from a given id",
+    "queries": ["sort_by", "order_by", "accepts any valid review id"],
+    "exampleResponse": {
+      "comments": [
+        {
+          "body": "Not sure about dogs, but my cat likes to get involved with board games, the boxes are their particular favourite",
+          "votes": 10,
+          "author": "philippaclaire9",
+          "review_id": 3,
+          "created_at": 161687458811
+        }
+      ]
+    }
+  },
+  "POST /api/reviews/:review_id/comments": {
+    "description": "posts a given comment to a provided review_id",
+    "queries": [
+      "must be given an object with a username and body",
+      "accepts any valid review id"
+    ],
+    "exampleResponse": {
+      "comment_id": 7,
+      "body": "a frustrating but enjoybale game thus far",
+      "review_id": 3,
+      "author": "bainesface",
+      "votes": 0,
+      "created_at": 161687458811
+    }
+  },
+  "DELETE /api/comments/:comment_id": {
+    "description": "deletes specific comments by coment_id",
+    "queries": ["accepts any valid comment id"],
+    "exampleResponse": {}
   }
 }
-
