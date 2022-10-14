@@ -78,16 +78,14 @@ exports.postComment = (req, res, next) => {
     next(err);
   });
 }
+
 exports.removeComment = (req, res, next) => {
  
   const comment_id = req.params.comment_id;
-  console.log(req.params)
-  
+
   deleteComment(comment_id).then((removedComment) => {
-     res.status(204).send({removedComment})
-   }) .catch((err) => {
-    console.log(err)
-    // next(err)
-   res.status(404).send({msg: 'comment does not exist'})
+     res.sendStatus(204)
+   }).catch((err) => {
+   next(err)
    });
   }

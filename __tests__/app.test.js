@@ -394,16 +394,13 @@ describe('12 - delete comment', () => {
     return request(app)
     .delete('/api/comments/3')
     .expect(204)
-    .then(({body}) => {
-     expect(body).toEqual({})
-    })
   })
   test("status 404: delete comment_id 999999", () => {
     return request(app)
     .delete('/api/comments/999')
     .expect(404)
     .then(({ body }) => {
-      expect(body.msg).toBe('comment does not exist')
+      expect(body.msg).toBe('does not exist')
         })
     })
 })
