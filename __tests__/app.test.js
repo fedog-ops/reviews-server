@@ -403,4 +403,12 @@ describe('12 - delete comment', () => {
       expect(body.msg).toBe('does not exist')
         })
     })
+    test("status 404: delete comment_id lemon", () => {
+      return request(app)
+      .delete('/api/comments/lemon')
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe('invalid data type')
+          })
+      })
 })
