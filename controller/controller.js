@@ -9,6 +9,8 @@ const {
   deleteComment
 } = require("../model/model");
 
+const endpoints = require('../endpoints.json')
+
 exports.getCategories = (req, res, next) => {
   fetchCategories()
     .then((categories) => {
@@ -88,4 +90,8 @@ exports.removeComment = (req, res, next) => {
    }).catch((err) => {
    next(err)
    });
+  }
+
+  exports.getAPI = (req, res, next) => {
+    res.send(endpoints)
   }

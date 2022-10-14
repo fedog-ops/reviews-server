@@ -10,8 +10,11 @@ const {
   getReviews,
   getCommentByReviewId,
   postComment,
-  removeComment
+  removeComment,
+  getAPI
 } = require("./controller/controller");
+
+app.get('/api', getAPI)
 
 app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
