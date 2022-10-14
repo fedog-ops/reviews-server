@@ -5,12 +5,8 @@ const db = require("../db/connection");
 const data = require("../db/data/test-data/index");
 const seed = require("../db/seeds/seed");
 
-beforeEach(() => {
-  return seed(data);
-});
-afterAll(() => {
-  if (db.end) db.end();
-});
+beforeEach(() => seed(data))
+afterAll(() => db.end())
 
 
 describe("3 GET/api/catagories", () => {
@@ -394,7 +390,7 @@ describe('Task 11 update getReviews with quieres' , () => {
   })
 })
 describe('12 - delete comment', () => {
-  it('deletes given comment_id', () => {
+  test.only('deletes given comment_id', () => {
     return request(app)
     .delete('/api/comments/3')
     .expect(204)
@@ -404,7 +400,7 @@ describe('12 - delete comment', () => {
   })
   test("status 404: delete comment_id 999999", () => {
     return request(app)
-    .delete('/api/comments/9999999')
+    .delete('/api/comments/999')
     .expect(404)
     .then(({ body }) => {
       expect(body.msg).toBe('comment does not exist')

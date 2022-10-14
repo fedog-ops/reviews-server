@@ -81,10 +81,13 @@ exports.postComment = (req, res, next) => {
 exports.removeComment = (req, res, next) => {
  
   const comment_id = req.params.comment_id;
-  const promises = [deleteComment(comment_id)]
-   Promise.all(promises).then((removedComment) => {
+  console.log(req.params)
+  
+  deleteComment(comment_id).then((removedComment) => {
      res.status(204).send({removedComment})
    }) .catch((err) => {
-    res.status(404).send({msg: 'comment does not exist'})
+    console.log(err)
+    // next(err)
+   res.status(404).send({msg: 'comment does not exist'})
    });
   }
