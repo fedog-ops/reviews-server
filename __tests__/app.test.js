@@ -142,32 +142,28 @@ describe("3 GET/api/catagories", () => {
   
   describe("7 GET/api/reviews:review_id WITHN COMMENTS :D", () => {
     
-      test("status 200: return an array of reviews", () => {
+      test.only("status 200: return an array of reviews", () => {
         return request(app)
           .get("/api/reviews/2")
           .expect(200)
           .then(({ body }) => {
-            if (body.review.length > 0) {
-              body.review.forEach((user) => {
                 expect(body.review).toEqual(
                   expect.objectContaining({
-                    title: expect("Jenga"),
-                    designer: expect("Leslie Scott"),
-                    owner: expect("philippaclaire9"),
-                    review_img_url: expect(
+                    title: "Jenga",
+                    designer: "Leslie Scott",
+                    owner: "philippaclaire9",
+                    review_img_url: 
                       "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png"
-                    ),
-                    review_body: expect("Fiddly fun for all the family"),
-                    category: expect("dexterity"),
-                    created_at: expect("2021-01-18T10:01:41.251Z"),
-                    votes: expect(5),
-                    comment_count: expect(3),
-                    review_id: expect(2),
+                    ,
+                    review_body: "Fiddly fun for all the family",
+                    category: "dexterity",
+                    created_at: "2021-01-18T10:01:41.251Z",
+                    votes: 5,
+                    comment_count: 3,
+                    review_id: 2,
                   })
                 );
-              });
-            }
-          });
+            });
       });
   
       test("status 400: invalid data type", () => {
