@@ -142,7 +142,7 @@ describe("3 GET/api/catagories", () => {
   
   describe("7 GET/api/reviews:review_id WITHN COMMENTS :D", () => {
     
-      test.only("status 200: return an array of reviews", () => {
+      test("status 200: return an array of reviews", () => {
         return request(app)
           .get("/api/reviews/2")
           .expect(200)
