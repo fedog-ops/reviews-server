@@ -3,7 +3,7 @@
 This project sets up the back end for my project using Node.js, Psql. It connects various APIs to the database returning different values based on the given input.
 
 Link to hosted website
-https://felix-boardgame-server.cyclic.app
+https://felix-boardgame-server.cyclic.app/api
 
 Instruction for setup
 If you wish to clone this repo you will not have access to the necessary environment variables. To gain access you must add ... a .env.test and .env.development. Into each, add PGDATABASE=<database_name_here>, with the correct database name for that environment (see /db/setup.sql for the database names in order to successfully connect to the two databases locally.
