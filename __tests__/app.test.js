@@ -340,7 +340,7 @@ describe("Task 10", () => {
 
 describe("Task 11 update getReviews with quieres", () => {
  
-  it("slug", () => {
+  it("slug query", () => {
     return request(app)
       .get("/api/reviews?slug=dexterity")
       .expect(200)
