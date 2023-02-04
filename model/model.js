@@ -49,7 +49,7 @@ exports.ammendVotes = (review_id, votes) => {
       return rows;
     });
 };
-exports.fetchReviews = (order_by = "DESC", sort_by = "created_at") => {
+exports.fetchReviews = (order_by = "DESC", sort_by = "created_at", slug = null) => {
   const allowedOrders = ["ASC", "DESC"];
   const allowedSorts = [
     " title",
@@ -64,6 +64,9 @@ exports.fetchReviews = (order_by = "DESC", sort_by = "created_at") => {
   if (!allowedOrders.includes(order_by) || !allowedSorts.includes(sort_by)) {
     return Promise.reject({ status: 400, msg: "invalid data type" });
   }
+  let slugInfo = ''
+  if(slug) slugInfo=` WHERE reviews.category = '${slug}' `
+    
   
   return db
     .query(
@@ -72,9 +75,11 @@ exports.fetchReviews = (order_by = "DESC", sort_by = "created_at") => {
         FROM reviews
         
         LEFT JOIN comments
-        ON comments.review_id = reviews.review_id
+        ON comments.review_id = reviews.review_id`
+
+       + slugInfo +
         
-        GROUP BY reviews.review_id
+        ` GROUP BY reviews.review_id
         ORDER BY ${sort_by} ${order_by};`
     )
     .then(({ rows }) => {
