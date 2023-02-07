@@ -93,8 +93,12 @@ exports.fetchCommentByReviewId = (review_id) => {
   return db
     .query(
       `SELECT * FROM comments
-       WHERE review_id = $1
-       ORDER BY created_at DESC;`,
+      
+      LEFT JOIN users ON comments.author = users.username
+      
+      WHERE review_id = $1
+   
+      ORDER BY created_at DESC;`,
       [review_id]
     )
     .then(({ rows }) => {
