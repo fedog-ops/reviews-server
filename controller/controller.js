@@ -49,7 +49,7 @@ exports.getReviews = (req, res, next) => {
   const {order_by, sort_by, slug} = req.query
     fetchReviews(order_by, sort_by, slug)
     .then((reviews) => {
-      res.status(200).send({reviews: reviews});
+     res.status(200).send({reviews: reviews});
     }).catch((err) => {
         next(err)
     })
