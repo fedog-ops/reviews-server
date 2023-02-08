@@ -32,7 +32,6 @@ exports.getReviewsById = (req, res, next) => {
 };
 exports.getUsers = (req, res, next) => {
   fetchUsers().then((data) => {
-    console.log(data);
     res.status(200).send({ users: data });
   });
 };
